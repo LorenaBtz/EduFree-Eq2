@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BackendService } from 'src/app/services/backend.service';
 import Swal from 'sweetalert2';
+import { NgbModalConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDatatableModule  } from '@swimlane/ngx-datatable';
 
 interface Grupo {
+  id: string;
   codigoGrupo: string;
   capacidadEstudiantes: number;
   docenteId: string;
@@ -24,7 +27,6 @@ interface Docente {
   noIdentificacion: string;
   rol: string;
 }
-
 @Component({
   selector: 'app-administrador-grupos',
   templateUrl: './administrador-grupos.component.html',
@@ -41,7 +43,9 @@ export class AdministradorGruposComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private backend: BackendService
+    private backend: BackendService,
+    config: NgbModalConfig,
+    private modalService: NgbModal
   ) {
     this.formGrupos = this.fb.group({
       codigoGrupo: ['', Validators.required],
@@ -52,13 +56,16 @@ export class AdministradorGruposComponent implements OnInit {
     this.getGrupos();
     this.getAsignaturas();
     this.getDocentes();
+    config.backdrop = 'static';
+    config.keyboard = false;
   }
 
   ngOnInit(): void {
   }
 
+  /** @title CRUD functions */
   getGrupos() {
-    this.backend.get('/grupos').subscribe(
+    this.backend.getRequest('/grupos').subscribe(
       {
         next: (data) => {
           this.listaGrupos = data;
@@ -74,7 +81,7 @@ export class AdministradorGruposComponent implements OnInit {
   }
 
   getAsignaturas() {
-    this.backend.get('/asignaturas').subscribe(
+    this.backend.getRequest('/asignaturas').subscribe(
       {
         next: (data) => {
           this.listaAsignaturas = data;
@@ -90,9 +97,9 @@ export class AdministradorGruposComponent implements OnInit {
   }
 
   getDocentes() {
-    const filter = {"where":{"rol":"Docente"}};
+    const filter = { "where": { "rol": "Docente" } };
 
-    this.backend.getRequestFilter('usuarios',JSON.stringify(filter)).subscribe(
+    this.backend.getRequestFilter('usuarios', JSON.stringify(filter)).subscribe(
       {
         next: (data) => {
           this.listaDocentes = data;
@@ -237,5 +244,52 @@ export class AdministradorGruposComponent implements OnInit {
   limpiarFormulario(): void {
     this.formGrupos.reset();
   }
+
+  /** @title Modal functions */
+  closeResult: string = "";
+
+  openModalId(content: any) {
+    this.idGrupo;
+    this.open(content);
+  }
+
+  open(content: any) {
+    this.modalService.open(
+      content,
+      {
+        ariaLabelledBy: 'modal-basic-title',
+        size: 'xl',
+        centered: true,
+        scrollable: true
+      }
+    ).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    }
+    );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  /**@title Table [ngxDatatable] */
+  columns: any[] = [
+    { prop: 'codigoGrupo', name: 'Código' },
+    { prop: 'docenteId', name: 'Docente' },
+    { prop: 'fechaCreacion', name: 'Fecha de creación' },
+    { prop: 'capacidadEstudiantes', name: 'Capacidad de estudiantes' },
+    { prop: 'acciones', name: 'Acciones' }
+  ];
+
+  rows: any[] = [];
+  
 
 }

@@ -14,7 +14,7 @@ export class InscripcionesComponent implements OnInit {
   listaProgramas: Programa[] = [];
 
   constructor(private backend: BackendService) {
-    this.backend.get('/programas-academicos').subscribe(
+    this.backend.getRequest('/programas-academicos').subscribe(
       {
         next: (data) => {
          // alert(data+"Datos Obtenidos correctamente");

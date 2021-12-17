@@ -49,7 +49,7 @@ export class AdministradorAsignaturasComponent implements OnInit {
   }
 
   getAsignaturas() {
-    this.backend.get('/asignaturas').subscribe(
+    this.backend.getRequest('/asignaturas').subscribe(
       {
         next: (data) => {
           this.listaAsignaturas = data;
@@ -65,7 +65,7 @@ export class AdministradorAsignaturasComponent implements OnInit {
   }
 
   getProgramas() {
-    this.backend.get('/programas-academicos').subscribe({
+    this.backend.getRequest('/programas-academicos').subscribe({
       next: (data) => {
         this.listaProgramas = data;
       },

@@ -72,7 +72,7 @@ export class AdministradorUsuariosComponent implements OnInit {
   }
 
   obtenerUsuarios(): void {
-    this.Backend.get('usuarios').subscribe({
+    this.Backend.getRequest('usuarios').subscribe({
       next: (data) => {
         this.listaUsuarios = data;
       },
@@ -86,7 +86,7 @@ export class AdministradorUsuariosComponent implements OnInit {
   }
 
   obtenerProgramas(): void {
-    this.Backend.get('/programas-academicos').subscribe({
+    this.Backend.getRequest('/programas-academicos').subscribe({
       next: (data) => {
         this.listaProgramas = data;
       },
@@ -98,7 +98,7 @@ export class AdministradorUsuariosComponent implements OnInit {
   }
 
   obtenerRoles(): void {
-    this.Backend.get('/perfiles').subscribe({
+    this.Backend.getRequest('/perfiles').subscribe({
       next: (data) => {
         // alert(data+"Datos Obtenidos correctamente");
         this.listaRoles = data;

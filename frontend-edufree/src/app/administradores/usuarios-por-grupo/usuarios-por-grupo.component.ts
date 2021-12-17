@@ -58,7 +58,7 @@ export class UsuariosPorGrupoComponent implements OnInit {
 
   getEstudiantesPorGrupo() {
 
-    this.backend.get('/usuarios-por-grupo').subscribe(
+    this.backend.getRequest('/usuarios-por-grupo').subscribe(
       {
         next: (data) => {
           console.log(data);

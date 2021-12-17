@@ -17,7 +17,7 @@ export class BackendService {
     }
    }
 
-  get(url: string): Observable<any> {
+  getRequest(url: string): Observable<any> {
     return this.http.get(
       this.rootUrl + url,
       {

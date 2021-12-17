@@ -18,7 +18,7 @@
                 <div class="col-md-6">
                     <div class="form-group py-1">
                         <input type="text" class="form-control rounded-pill" formControlName="id" readonly
-                            placeholder="Id"/>
+                            placeholder="Id" />
                     </div>
                     <div class="form-group py-1">
                         <input type="text" class="form-control rounded-pill" formControlName="capacidadEstudiantes"
@@ -28,7 +28,8 @@
                         <select class="form-select rounded-pill" placeholder="Docente" required
                             formControlName="docenteId">
                             <option value="" disabled selected hidden>Docente</option>
-                            <option *ngFor="let d of listaDocentes" value="{{d.id}}">{{d.noIdentificacion}} - {{d.apellidosUsuario}}, {{d.nombresUsuario}} [{{d.rol}}]</option>
+                            <option *ngFor="let d of listaDocentes" value="{{d.id}}">{{d.noIdentificacion}} -
+                                {{d.apellidosUsuario}}, {{d.nombresUsuario}} [{{d.rol}}]</option>
                         </select>
                     </div>
                 </div>
@@ -72,31 +73,39 @@
     </section>
 
     <section class="m-0 p-0">
-        <table class="table table-responsive-md table-hover">
+        <table class="table table-responsive-md table-hover mt-1">
             <thead>
                 <tr>
-                    <th>Código</th>
-                    <th>Capacidad Estudiantes</th>
-                    <th>Docente Id</th>
-                    <th>Asignatura Id</th>
-                    <th>Fecha de Creacion</th>
-                    <th class="text-center">Acciones</th>
+                    <th>Id</th>
+                    <th scope="col" class="text-center">Código</th>
+                    <th scope="col" class="text-center">Capacidad Estudiantes</th>
+                    <th scope="col" class="text-center">Docente Id</th>
+                    <th scope="col" class="text-center">Asignatura Id</th>
+                    <th scope="col" class="text-center">Fecha de Creacion</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                    <th scope="col" class="text-center">Info</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr *ngFor="let g of listaGrupos">
-                    <td scope="col">{{g.codigoGrupo}}</td>
-                    <td scope="col">{{g.capacidadEstudiantes}}</td>
-                    <td scope="col">{{g.docenteId}}</td>
-                    <td scope="col">{{g.asignaturaId}}</td>
-                    <td scope="col">{{g.fechaCreacion}}</td>
-                    <td scope="col" class="text-center">
+                    <td>1</td>
+                    <td scope="row">{{g.codigoGrupo}}</td>
+                    <td scope="row">{{g.capacidadEstudiantes | number}}</td>
+                    <td scope="row">{{g.docenteId}}</td>
+                    <td scope="row">{{g.asignaturaId}}</td>
+                    <td scope="row">{{g.fechaCreacion | date}}</td>
+                    <td scope="row" class="text-center">
                         <a type="button" class="mx-1 text-warning" (click)="actualizar(g)">
                             <i class="h4 bi bi-pencil-square"></i>
                         </a>
                         <a type="button" class="mx-1 text-danger" (click)="deleteGrupo(g)">
                             <i class="h4 bi bi-trash"></i>
+                        </a>
+                    </td>
+                    <td scope="col" class="text-center">
+                        <a type="button" class="mx-1 text-secondary" (click)="open(content)">
+                            <i class="h4 bi bi-info-square"></i>
                         </a>
                     </td>
                 </tr>
@@ -105,3 +114,68 @@
     </section>
 
 </main>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header cls-modal-header-bg">
+        <h4 class="modal-title" id="modal-basic-title">Información del Grupo</h4>
+        <button type="" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">
+                <i class="bi bi-x-lg"></i>
+            </span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+
+            <h5 class="card-header">Grupo ## / Asignatura</h5>
+            <div class="card-body">
+                <div *ngFor="let g of listaGrupos">
+                    <p class="card-text">
+                        <strong>Docente: </strong>
+                        <span>{{g.asignaturaId}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-5">
+            <h5 class="card-header">Estudiantes Registrados</h5>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Cerrar</button>
+    </div>
+</ng-template>

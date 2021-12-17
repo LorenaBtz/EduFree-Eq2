@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,7 +53,8 @@ import { UsuariosPorGrupoComponent } from './administradores/usuarios-por-grupo/
     AppRoutingModule,
     HttpClientModule,
     AppRoutingModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

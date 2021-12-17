@@ -48,7 +48,7 @@ export class AdministradorProgramasComponent implements OnInit {
   }
 
   getProgramas() {
-    this.backend.get('/programas-academicos').subscribe(
+    this.backend.getRequest('/programas-academicos').subscribe(
       {
         next: (data) => {
           this.listaProgramas = data;

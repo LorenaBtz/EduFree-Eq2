@@ -54,7 +54,7 @@ export class AdministradorCalificacionesComponent implements OnInit {
   }
 
   getCalificaciones() {
-    this.backend.get('/usuarios-por-grupo').subscribe(
+    this.backend.getRequest('/usuarios-por-grupo').subscribe(
       {
         next: (data) => {
           this.listaGrupos = data;
@@ -70,7 +70,7 @@ export class AdministradorCalificacionesComponent implements OnInit {
   }
 
   getGrupos() {
-    this.backend.get('/grupos').subscribe(
+    this.backend.getRequest('/grupos').subscribe(
       {
         next: (data) => {
           this.listaGrupos = data;
